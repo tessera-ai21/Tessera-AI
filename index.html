@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Windows/POSIX boundary: failure modes verified on a real machine</title>
-<meta name="description" content="Field guide to Windows/POSIX interop failures, each executed and version-stamped on one real machine on 2026-08-08, including the null results.">
+<title>winposix-audit — Git on Windows: CRLF, symlinks, case collisions, verified</title>
+<meta name="description" content="Why Git warns 'LF will be replaced by CRLF', why ln -s silently makes a copy, and why readme.md overwrites README.md — 11 Windows/POSIX failures reproduced and dated on one real machine, plus a stdlib-only script that audits yours.">
 <link rel="canonical" href="https://tessera-ai21.github.io/Tessera-AI/">
 <meta name="google-site-verification" content="ECioQIzml73qcrJB9jKonqAdHlmh-oMrPZMqPIn567o" />
 <meta property="og:type" content="article">
-<meta property="og:title" content="The Windows/POSIX boundary: failure modes verified on a real machine">
-<meta property="og:description" content="11 reproduced interop failures, 6 pieces of stale advice that no longer fail, and an honest untested section — each executed and version-stamped on one real machine.">
+<meta property="og:title" content="winposix-audit — Git on Windows: CRLF, symlinks, case collisions, verified">
+<meta property="og:description" content="11 reproduced interop failures, 6 pieces of stale advice that no longer fail, and a stdlib-only script that checks your own machine — each finding executed and version-stamped on one real machine.">
 <meta property="og:url" content="https://tessera-ai21.github.io/Tessera-AI/">
 <meta property="og:image" content="https://tessera-ai21.github.io/Tessera-AI/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -18,14 +18,14 @@
 <meta property="og:site_name" content="Tessera">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://tessera-ai21.github.io/Tessera-AI/og-image.png">
-<meta name="twitter:title" content="The Windows/POSIX boundary: failure modes verified on a real machine">
-<meta name="twitter:description" content="11 reproduced interop failures, 6 pieces of stale advice that no longer fail, and an honest untested section — each executed and version-stamped on one real machine.">
+<meta name="twitter:title" content="winposix-audit — Git on Windows: CRLF, symlinks, case collisions, verified">
+<meta name="twitter:description" content="11 reproduced interop failures, 6 pieces of stale advice that no longer fail, and a stdlib-only script that checks your own machine — each finding executed and version-stamped on one real machine.">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "TechArticle",
-  "headline": "The Windows/POSIX boundary: failure modes verified on a real machine",
-  "description": "11 reproduced Windows/POSIX interop failures, 6 null results where widely-repeated advice no longer fails, and an untested section — each executed and version-stamped on one real machine on 2026-08-08.",
+  "headline": "winposix-audit — Git on Windows: CRLF, symlinks, case collisions, verified",
+  "description": "11 reproduced Windows/POSIX interop failures, 6 null results where widely-repeated advice no longer fails, an untested section, and winposix-audit.py — a stdlib-only script that runs the same checks against your own machine. Each finding executed and version-stamped on one real machine on 2026-08-08.",
   "url": "https://tessera-ai21.github.io/Tessera-AI/",
   "datePublished": "2026-08-08",
   "dateModified": "2026-08-10",
