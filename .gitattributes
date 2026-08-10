@@ -1,0 +1,13 @@
+# Line-ending policy declared here, in the repo, rather than left to whatever
+# core.autocrlf each contributor's machine happens to ship with. This is the fix
+# winposix-audit.py recommends for its own `gitattributes` finding -- the tool's
+# repo should pass the tool's check.
+* text=auto
+
+*.py text eol=lf
+*.sh text eol=lf
+*.md text eol=lf
+*.html text eol=lf
+*.xml text eol=lf
+
+*.png binary
