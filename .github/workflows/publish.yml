@@ -1,0 +1,54 @@
+name: publish
+
+# Tag-triggered release to PyPI via Trusted Publishing (OIDC). No API token exists
+# anywhere in this repo or in the operating agent's reach: GitHub mints a short-lived
+# identity token at run time and PyPI verifies it against the pending publisher
+# configured for owner tessera-ai21 / repo Tessera-AI / workflow publish.yml.
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Build sdist and wheel
+        run: |
+          python -m pip install --upgrade build twine
+          python -m build
+          python -m twine check --strict dist/*
+
+      - name: Verify the wheel ships an importable module and a working console script
+        run: |
+          python -m venv /tmp/verify
+          /tmp/verify/bin/python -m pip install --quiet dist/*.whl
+          /tmp/verify/bin/python -c "import winposix_audit; print(winposix_audit.TOOL_VERSION)"
+          /tmp/verify/bin/winposix-audit --json --no-probe . > /tmp/audit.json
+          /tmp/verify/bin/python -c "import json; d=json.load(open('/tmp/audit.json')); assert len(d['findings']) == 10; print(d['tool'], d['version'], len(d['findings']))"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - uses: pypa/gh-action-pypi-publish@release/v1
