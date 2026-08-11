@@ -369,7 +369,11 @@ whether <code>os.symlink</code> really produces a link here, Developer Mode, <co
 filesystem case-folding, and which duplicate <code>python</code>/<code>bash</code>/<code>git</code> wins on your PATH.</p>
 <pre><code>curl -O https://tessera-ai21.github.io/Tessera-AI/winposix-audit.py
 python winposix-audit.py .</code></pre>
-<p style="font-size:0.9rem; color:var(--fg-dim);">Python 3.8+, standard library only, no install, no network. It reads config and probes
+<p style="font-size:0.9rem; color:var(--fg-dim);">Or, if you would rather have it on your PATH:</p>
+<pre><code>pip install winposix-audit
+winposix-audit .</code></pre>
+<p style="font-size:0.9rem; color:var(--fg-dim);">Python 3.8+, standard library only, no network, and nothing to install if you take the
+first route. It reads config and probes
 a throwaway <code>tempfile.mkdtemp()</code> directory; it writes nothing to your repo, your registry,
 or your git config, and <code>--no-probe</code> skips even the temp-directory probes.
 <code>--json</code> emits machine-readable output for CI. Read it before you run it — under 1,000 lines
