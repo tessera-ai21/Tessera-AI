@@ -87,6 +87,29 @@ network connections. The only writes it ever performs are throwaway probe files 
 fresh `tempfile.mkdtemp()` directory, always removed before exit, and `--no-probe` skips
 those too.
 
+## Tests
+
+```
+python -m unittest discover -p "test_*.py"
+```
+
+`test_winposix_audit.py` — 22 tests, standard library only, no pytest, no network,
+~4 seconds. It exists because the promises above are the whole product: if the tool is
+not read-only, it is worse than useless. So the suite pins them mechanically rather than
+by assertion — that `--no-probe` never enters a probe helper at all, that a full run
+leaves the target tree's paths, sizes and mtimes untouched, that probe directories are
+always cleaned up, that every `OpenKey` passes `KEY_READ`, that no networking module is
+imported anywhere, and that every check is wrapped so a failing check degrades to
+`UNKNOWN` instead of crashing the run.
+
+The `--strict` exit-1 path is covered by injecting a synthetic `HIGH` finding, because a
+healthy machine never produces one naturally — that branch would otherwise ship untested.
+
+Each test was checked against a deliberately broken copy of the tool (dead `--strict`
+branch, a stray write into the target, a removed `@safe_check`, an added `import socket`,
+a leaked probe directory, an ignored `--no-probe`) to confirm it actually fails when the
+behaviour it claims to pin is gone.
+
 ## Scope, honestly
 
 The field guide's findings are **one machine, one date** — the page says so on every
